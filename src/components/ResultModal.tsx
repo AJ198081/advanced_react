@@ -1,16 +1,22 @@
-import {ForwardedRef, forwardRef, useImperativeHandle, useRef} from "react";
+import {ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useRef} from "react";
+import {createPortal} from "react-dom";
 
 interface ResultModalProps {
     result: number,
     targetTime: number,
+    handleRest: () => void
 }
 
 export interface ForwardedRefProps {
     open(): void;
+
     reset(): string;
 }
 
-export const ResultModal = forwardRef<ForwardedRefProps, ResultModalProps>(({result, targetTime}: ResultModalProps, ref: ForwardedRef<ForwardedRefProps>) => {
+const ResultModal = (
+    {result, targetTime, handleRest}: ResultModalProps,
+    ref: ForwardedRef<ForwardedRefProps>
+): ReactNode => {
 
     const dialog = useRef<HTMLDialogElement | null>(null);
 
@@ -19,7 +25,6 @@ export const ResultModal = forwardRef<ForwardedRefProps, ResultModalProps>(({res
             open() {
                 dialog.current!.showModal();
             },
-
             reset() {
                 dialog.current!.close();
                 return "5";
@@ -27,15 +32,15 @@ export const ResultModal = forwardRef<ForwardedRefProps, ResultModalProps>(({res
         }
     })
 
-    return (
-        <dialog ref={dialog}>
-            <h2>Your {result > 0 ? 'Won' : 'Lost'} </h2>
-            <p>Your target time was <strong>{targetTime}</strong> second {`${targetTime > 1 ? 's' : ''}`}</p>
-            <p>You stopped the timer with X seconds left</p>
-            <form method={"dialog"}>
-                <button>Play Again</button>
-            </form>
-        </dialog>
-    )
+    return createPortal(<dialog ref={dialog} onClose={handleRest}>
+        <h2>Your {result > 0 ? 'Won' : 'Lost'} </h2>
+        <p>Your target time was <strong>{targetTime}</strong> second {`${targetTime > 1 ? 's' : ''}`}</p>
+        <p>You stopped the timer with {(result / 1000).toFixed(2)} seconds left</p>
+        <form method={"dialog"}>
+            <button onClick={handleRest}>Play Again</button>
+        </form>
+    </dialog>, document.getElementById('modal')!);
+};
 
-});
+// The ForwardedRefProps & the actual Props get passed to the (ResultModal)
+export default forwardRef<ForwardedRefProps, ResultModalProps>(ResultModal);
