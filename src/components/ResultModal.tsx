@@ -7,6 +7,7 @@ interface ResultModalProps {
 
 export interface ForwardedRefProps {
     open(): void;
+    reset(): string;
 }
 
 export const ResultModal = forwardRef<ForwardedRefProps, ResultModalProps>(({result, targetTime}: ResultModalProps, ref: ForwardedRef<ForwardedRefProps>) => {
@@ -17,6 +18,11 @@ export const ResultModal = forwardRef<ForwardedRefProps, ResultModalProps>(({res
         return {
             open() {
                 dialog.current!.showModal();
+            },
+
+            reset() {
+                dialog.current!.close();
+                return "5";
             }
         }
     })

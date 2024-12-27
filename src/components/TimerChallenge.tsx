@@ -1,4 +1,4 @@
-import {MutableRefObject, useRef, useState} from "react";
+import {RefObject, useRef, useState} from "react";
 import {ForwardedRefProps, ResultModal} from "./ResultModal.tsx";
 
 interface TimerChallengeProps {
@@ -12,7 +12,7 @@ export const TimerChallenge = ({title, targetTime}: TimerChallengeProps) => {
     const [timerStarted, setTimerStarted] = useState<boolean>(false);
 
     const challengeTimer = useRef<number | null>(null);
-    const modalRef = useRef<ForwardedRefProps>(null);
+    const modalRef: RefObject<ForwardedRefProps> = useRef<ForwardedRefProps>(null);
 
     const handleStartChallenge = () => {
         challengeTimer.current = setTimeout(() => {
@@ -26,6 +26,9 @@ export const TimerChallenge = ({title, targetTime}: TimerChallengeProps) => {
     const handleStopChallenge = () => {
         if (challengeTimer.current && !timerExpired) {
             clearTimeout(challengeTimer.current);
+            console.log('timer stopped');
+            const data = modalRef.current?.reset();
+            console.log(data && data)
         }
         setTimerExpired(false);
         setTimerStarted(false);
