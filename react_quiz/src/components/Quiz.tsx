@@ -36,12 +36,15 @@ export const Quiz = ({quizTimedOut}: QuizProps): ReactNode => {
         if (quizTimedOut) {
             setAnswered(prevState => {
                 prevState.forEach(question => question.answered = true);
-                return [...prevState]})
+                return [...prevState]
+            })
         }
     }, [quizTimedOut])
 
     const computeScore = (): void => {
-        setUserScore(answered.filter((question, index) => question.userAnswer === mathQuestions[index].correctAnswer).length);
+        setUserScore(answered
+            .filter((question, index) => question.userAnswer === mathQuestions[index].correctAnswer)
+            .length);
 
     }
 
