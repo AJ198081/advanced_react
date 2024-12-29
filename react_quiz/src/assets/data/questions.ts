@@ -1,204 +1,121 @@
 export interface Question {
     id: string;
-    text: string;
+    question: string;
     answers: string[];
     correctAnswer: string;
 }
 
-export const QUIZ_DURATION = 20; //Minutes
+export const QUIZ_DURATION = 5; //Minutes
+
 
 export const mathQuestions: Question[] = [
     {
-        id: 'm1',
-        text: 'What is 47 + 26?',
-        answers: ['73', '72', '71', '74'],
-        correctAnswer: '73',
+        id: 'y5q1',
+        question: 'What is 123 + 456?',
+        answers: ['579', '577', '580', '578'],
+        correctAnswer: '579',
     },
     {
-        id: 'm2',
-        text: 'What is 56 - 39?',
-        answers: ['17', '18', '19', '16'],
-        correctAnswer: '17',
+        id: 'y5q2',
+        question: 'What is 735 - 248?',
+        answers: ['487', '486', '489', '485'],
+        correctAnswer: '487',
     },
     {
-        id: 'm3',
-        text: 'What is 8 x 7?',
-        answers: ['54', '56', '49', '63'],
-        correctAnswer: '56',
+        id: 'y5q3',
+        question: 'What is 12 x 12?',
+        answers: ['144', '121', '156', '132'],
+        correctAnswer: '144',
     },
     {
-        id: 'm4',
-        text: 'What is 64 ÷ 8?',
-        answers: ['7', '8', '9', '6'],
-        correctAnswer: '8',
-    },
-    {
-        id: 'm5',
-        text: 'What is the perimeter of a square with side length 5 cm?',
-        answers: ['20 cm', '25 cm', '15 cm', '10 cm'],
-        correctAnswer: '20 cm',
-    },
-    {
-        id: 'm6',
-        text: 'What is the area of a rectangle with length 8 cm and width 3 cm?',
-        answers: ['22 cm²', '24 cm²', '20 cm²', '26 cm²'],
-        correctAnswer: '24 cm²',
-    },
-    {
-        id: 'm7',
-        text: 'How many minutes are there in 2 hours?',
-        answers: ['100', '120', '140', '110'],
-        correctAnswer: '120',
-    },
-    {
-        id: 'm8',
-        text: 'What is 3/4 of 40?',
-        answers: ['20', '30', '25', '35'],
-        correctAnswer: '30',
-    },
-    {
-        id: 'm9',
-        text: 'How many edges does a cube have?',
-        answers: ['12', '8', '16', '10'],
+        id: 'y5q4',
+        question: 'What is 144 ÷ 12?',
+        answers: ['12', '11', '13', '10'],
         correctAnswer: '12',
     },
     {
-        id: 'm10',
-        text: 'What is the value of 36 ÷ 9?',
-        answers: ['4', '5', '6', '3'],
-        correctAnswer: '4',
+        id: 'y5q5',
+        question: 'What is the perimeter of a rectangle with length 10 cm and width 7 cm?',
+        answers: ['34 cm', '32 cm', '36 cm', '38 cm'],
+        correctAnswer: '34 cm',
+    },
+    // Repeat similar structure for 95 more questions
+    {
+        id: 'y5q6',
+        question: 'What is the area of a square with side length 9 cm?',
+        answers: ['81 cm²', '72 cm²', '85 cm²', '80 cm²'],
+        correctAnswer: '81 cm²',
     },
     {
-        id: 'm11',
-        text: 'What is half of 84?',
-        answers: ['41', '42', '43', '44'],
-        correctAnswer: '42',
+        id: 'y5q7',
+        question: 'How many hours are there in 3 days?',
+        answers: ['72', '70', '68', '74'],
+        correctAnswer: '72',
     },
     {
-        id: 'm12',
-        text: 'What is 7 squared (7²)?',
-        answers: ['49', '56', '42', '72'],
-        correctAnswer: '49',
+        id: 'y5q8',
+        question: 'If one apple costs £0.75, how much will 4 apples cost?',
+        answers: ['£3.00', '£3.25', '£2.75', '£4.00'],
+        correctAnswer: '£3.00',
     },
     {
-        id: 'm13',
-        text: 'How much is 500 - 176?',
-        answers: ['324', '328', '340', '326'],
-        correctAnswer: '324',
+        id: 'y5q9',
+        question: 'What is 25% of 200?',
+        answers: ['50', '25', '100', '75'],
+        correctAnswer: '50',
     },
     {
-        id: 'm14',
-        text: 'If a triangle has sides of 3 cm, 4 cm, and 5 cm, what is its perimeter?',
-        answers: ['10 cm', '11 cm', '12 cm', '13 cm'],
-        correctAnswer: '12 cm',
+        id: 'y5q10',
+        question: 'What is the volume of a cuboid with length 5 cm, width 4 cm, and height 3 cm?',
+        answers: ['60 cm³', '50 cm³', '65 cm³', '70 cm³'],
+        correctAnswer: '60 cm³',
     },
     {
-        id: 'm15',
-        text: 'How many days are there in 3 weeks?',
-        answers: ['18', '20', '21', '24'],
-        correctAnswer: '21',
+        id: 'y5q11',
+        question: 'What is the smallest prime number greater than 10?',
+        answers: ['11', '13', '12', '14'],
+        correctAnswer: '11',
     },
     {
-        id: 'm16',
-        text: 'What is the next multiple of 6 after 48?',
-        answers: ['54', '60', '56', '50'],
-        correctAnswer: '54',
+        id: 'y5q12',
+        question: 'What is 10²?',
+        answers: ['100', '110', '120', '101'],
+        correctAnswer: '100',
     },
     {
-        id: 'm17',
-        text: 'How many lines of symmetry does a regular hexagon have?',
-        answers: ['3', '4', '5', '6'],
+        id: 'y5q13',
+        question: 'What is the sum of 3/4 and 2/4?',
+        answers: ['5/4', '3/2', '6/4', '7/4'],
+        correctAnswer: '5/4',
+    },
+    {
+        id: 'y5q14',
+        question: 'Convert 3000 grams into kilograms.',
+        answers: ['3 kg', '30 kg', '0.3 kg', '300 kg'],
+        correctAnswer: '3 kg',
+    },
+    {
+        id: 'y5q15',
+        question: 'What is the value of π rounded to 2 decimal places?',
+        answers: ['3.14', '3.15', '3.13', '3.12'],
+        correctAnswer: '3.14',
+    },
+    {
+        id: 'y5q16',
+        question: 'What is the value of 16 ÷ 2?',
+        answers: ['8', '6', '12', '7'],
+        correctAnswer: '8',
+    },
+    {
+        id: 'y5q17',
+        question: 'How many angles does a hexagon have?',
+        answers: ['6', '5', '7', '4'],
         correctAnswer: '6',
     },
     {
-        id: 'm18',
-        text: 'What is the sum of angles in a triangle?',
-        answers: ['360°', '270°', '180°', '90°'],
-        correctAnswer: '180°',
-    },
-    {
-        id: 'm19',
-        text: 'What is 15% of 200?',
-        answers: ['20', '25', '30', '35'],
-        correctAnswer: '30',
-    },
-    {
-        id: 'm20',
-        text: 'What is the volume of a cube with side length 4 cm?',
-        answers: ['64 cm³', '48 cm³', '56 cm³', '60 cm³'],
-        correctAnswer: '64 cm³',
+        id: 'y5q18',
+        question: 'Which of the following fractions is equivalent to 1/2?',
+        answers: ['2/4', '3/6', '4/8', 'All of the above'],
+        correctAnswer: 'All of the above',
     },
 ];
-/*
-export const questions: Question[] = [
-    {
-        id: 'q1',
-        text: 'Which of the following definitions best describes React.js?',
-        answers: [
-            'A library to build user interfaces with help of declarative code.',
-            'A library for managing state in web applications.',
-            'A framework to build user interfaces with help of imperative code.',
-            'A library used for building mobile applications only.',
-        ],
-    },
-    {
-        id: 'q2',
-        text: 'What purpose do React hooks serve?',
-        answers: [
-            'Enabling the use of state and other React features in functional components.',
-            'Creating responsive layouts in React applications.',
-            'Handling errors within the application.',
-            'Part of the Redux library for managing global state.',
-        ],
-    },
-    {
-        id: 'q3',
-        text: 'Can you identify what JSX is?',
-        answers: [
-            'A JavaScript extension that adds HTML-like syntax to JavaScript.',
-            'A JavaScript library for building dynamic user interfaces.',
-            'A specific HTML version that was explicitly created for React.',
-            'A tool for making HTTP requests in a React application.',
-        ],
-    },
-    {
-        id: 'q4',
-        text: 'What is the most common way to create a component in React?',
-        answers: [
-            'By defining a JavaScript function that returns a renderable value.',
-            'By defining a custom HTML tag in JavaScript.',
-            'By creating a file with a .jsx extension.',
-            'By using the "new" keyword followed by the component name.',
-        ],
-    },
-    {
-        id: 'q5',
-        text: 'What does the term "React state" imply?',
-        answers: [
-            'An object in a component that holds values and may cause the component to render on change.',
-            'The lifecycle phase a React component is in.',
-            'The overall status of a React application, including all props and components.',
-            'A library for managing global state in React applications.',
-        ],
-    },
-    {
-        id: 'q6',
-        text: 'How do you typically render list content in React apps?',
-        answers: [
-            'By using the map() method to iterate over an array of data and returning JSX.',
-            'By using the for() loop to iterate over an array of data and returning JSX.',
-            'By using the forEach() method to iterate over an array of data and returning JSX.',
-            'By using the loop() method to iterate over an array of data and returning JSX.',
-        ],
-    },
-    {
-        id: 'q7',
-        text: 'Which approach can NOT be used to render content conditionally?',
-        answers: [
-            'Using a the #if template syntax.',
-            'Using a ternary operator.',
-            'Using the && operator.',
-            'Using an if-else statement.',
-        ],
-    },
-];*/

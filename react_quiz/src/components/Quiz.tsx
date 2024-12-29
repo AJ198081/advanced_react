@@ -54,20 +54,23 @@ export const Quiz = ({quizTimedOut}: QuizProps): ReactNode => {
                 ? answered
                     .filter(question => !question.answered)
                     .map(question => (<div id={"question"} className={"my-5 text-white"} key={question.id}>
-                            <h2>{question.text}</h2>
+                            <h2 className={"fs-1 text-center text-white-50"}>{question.question}</h2>
                             <ul id="answers">
-                                {question.answers.map((answer, qIndex) => (<li key={answer} className={"answer"}>
-                                        <button className={"font-monospace fw-bold"} onClick={() => {
-                                            question.userAnswer = answer;
-                                            question.answered = true;
-                                            setAnswered(prevAnswers => {
-                                                prevAnswers[qIndex] = question;
-                                                return [...prevAnswers];
-                                            });
-                                        }}>
-                                            {answer}
-                                        </button>
-                                    </li>
+                                {question.answers.map((answer, qIndex) => (
+                                    <div style={{width: "70%", margin: "0 auto"}}>
+                                        <li key={answer} className={"answer"}>
+                                            <button className={"font-monospace fs-3 mx-auto "} onClick={() => {
+                                                question.userAnswer = answer;
+                                                question.answered = true;
+                                                setAnswered(prevAnswers => {
+                                                    prevAnswers[qIndex] = question;
+                                                    return [...prevAnswers];
+                                                });
+                                            }}>
+                                                {answer}
+                                            </button>
+                                        </li>
+                                    </div>
                                 ))}
                             </ul>
                         </div>
@@ -82,7 +85,8 @@ export const Quiz = ({quizTimedOut}: QuizProps): ReactNode => {
                         </button>
                         {userScore !== null &&
                             <p className={" d-block text-white mx-4 text-center display-6"}>
-                                You scored : {userScore}
+                                You scored : {((userScore / mathQuestions.length) * 100).toFixed(1)} %, you
+                                got {userScore} correct out of {mathQuestions.length}.
                             </p>
                         }
                     </div>

@@ -7,6 +7,8 @@ import {QUIZ_DURATION} from "./assets/data/questions.ts";
 function App() {
 
     const [quizTimedOut, setQuizTimedOut] = useState(false);
+    const [userName, setUserName] = useState<string | null>(null);
+
 
     const onQuizTimeOut = useCallback(() => {
         console.log("Quiz Time Out");
@@ -20,8 +22,8 @@ function App() {
                 <ProgressBar quizTime={QUIZ_DURATION * 60 * 1000} onQuizTimeOut={onQuizTimeOut}/>
             </div>
         </div>
-        <Header />
-        <Quiz quizTimedOut={quizTimedOut} />
+        <Header userName={userName} setUserName={setUserName} />
+        {userName && <Quiz quizTimedOut={quizTimedOut} />}
     </>
   )
 }
