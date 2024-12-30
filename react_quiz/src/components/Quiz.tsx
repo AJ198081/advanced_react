@@ -24,11 +24,9 @@ const shuffleArray = <T, >(array: T[]): T[] => {
     return copiedArray;
 };
 
-const availableQuestions = shuffleArray(questions);
+export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): ReactNode => {
 
-export const Quiz = ({quizTimedOut, userInput}: QuizProps): ReactNode => {
-
-    const [answered, setAnswered] = useState<EnrichedAnswers[]>(availableQuestions
+    const [answered, setAnswered] = useState<EnrichedAnswers[]>(questions
         .slice(0, userInput.numberOfQuestions)
         // .sort(() => Math.random() - 0.5) // Random shuffle the questions
         .map(question => ({
@@ -63,7 +61,9 @@ export const Quiz = ({quizTimedOut, userInput}: QuizProps): ReactNode => {
         setIncorrectAnswers(answered.filter(question => question.userAnswer !== question.correctAnswer));
     };
 
-    console.log(incorrectAnswers);
+    if (answered.filter(question => !question.answered).length === 0) {
+        setQuizTimeOut(true);
+    }
 
 
     const renderIncorrectQuestions: ReactNode = useMemo(() => {
@@ -120,7 +120,7 @@ export const Quiz = ({quizTimedOut, userInput}: QuizProps): ReactNode => {
                         </button>
                         {userScore !== null &&
                             <p className={" d-block text-white mx-4 text-center display-6"}>
-                                You scored : {((userScore / answered.length) * 100).toFixed(1)} %, you
+                                {userInput.name} scored : {((userScore / answered.length) * 100).toFixed(1)} %,
                                 got {userScore} correct out of {answered.length}.
                             </p>
                         }
