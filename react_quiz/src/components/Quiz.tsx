@@ -110,8 +110,7 @@ export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): Reac
                             </ul>
                         </div>
                     )))
-                :
-                <>
+                : <>
                     <img src={"/quiz-complete.png"} alt={"Quiz Completed Logo"} className="m-auto d-block img-fluid"
                          style={{width: '50%', maxWidth: '300px'}}/>
                     <div className="text-center">
@@ -134,6 +133,5 @@ export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): Reac
                 </>
             }
         </>
-    )
-        ;
+    );
 }
