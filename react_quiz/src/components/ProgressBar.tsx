@@ -14,11 +14,13 @@ export const ProgressBar = ({quizTime, onQuizTimeOut}: ProgressBarProps) => {
         const intervalId = setInterval(() => {
             setRemainingTime(prevState => prevState - UPDATE_INTERVAL);
         }, UPDATE_INTERVAL);
+
         return () => clearInterval(intervalId);
     }, [])
 
     useEffect(() => {
         const timeoutId = setTimeout(onQuizTimeOut, quizTime);
+
         return () => clearTimeout(timeoutId);
     }, [quizTime, onQuizTimeOut]);
 
