@@ -26,7 +26,7 @@ const shuffleArray = <T, >(array: T[]): T[] => {
 
 export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): ReactNode => {
 
-    const [answered, setAnswered] = useState<EnrichedAnswers[]>(questions
+    const [answered, setAnswered] = useState<EnrichedAnswers[]>(shuffleArray(questions)
         .slice(0, userInput.numberOfQuestions)
         // .sort(() => Math.random() - 0.5) // Random shuffle the questions
         .map(question => ({
@@ -87,7 +87,7 @@ export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): Reac
             {(answered.findIndex(answer => !answer.answered) !== -1)
                 ? answered
                     .filter(question => !question.answered)
-                    .map(((question, questionIndex) => (
+                    .map(((question) => (
                         <div id={"question"} className={"my-5 text-white"} key={question.id}>
                             <h2 className={"fs-1 text-center text-white-50"}>{question.question}</h2>
                             <ul id="answers">
@@ -95,10 +95,12 @@ export const Quiz = ({quizTimedOut, userInput, setQuizTimeOut}: QuizProps): Reac
                                     <div key={answerIndex} style={{width: "70%", margin: "0 auto"}}>
                                         <li className={"answer"}>
                                             <button className={"font-monospace fs-3 mx-auto "} onClick={() => {
-                                                question.userAnswer = answer;
-                                                question.answered = true;
                                                 setAnswered(prevAnswers => {
-                                                    prevAnswers[questionIndex] = question;
+                                                    const existingQuestion = prevAnswers.find(prevQuestion => prevQuestion.id === question.id);
+                                                    if (existingQuestion) {
+                                                        existingQuestion.userAnswer = answer;
+                                                        existingQuestion.answered = true;
+                                                    }
                                                     return [...prevAnswers];
                                                 });
                                             }}>
