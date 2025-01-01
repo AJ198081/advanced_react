@@ -1,4 +1,4 @@
-import {useRef, useState, useCallback, useEffect, ReactNode} from 'react';
+import {useRef, useState, useCallback, ReactNode} from 'react';
 
 import {Place, Places} from './components/Places';
 import {Modal} from './components/Modal';
@@ -7,33 +7,18 @@ import logoImg from '/logo.png';
 import {AvailablePlaces} from './components/AvailablePlaces';
 import {fetchUserPlaces, updateUserPlaces} from './utilities/clients/http';
 import {Error} from './components/Error.jsx';
+import {useFetch} from "./utilities/hooks/useFetch.ts";
 
-export const App = (): ReactNode => {
+export const AppHooks = (): ReactNode => {
     const selectedPlace = useRef<Place | null>(null);
-
-    const [userPlaces, setUserPlaces] = useState<Place[]>([]);
-    const [isFetching, setIsFetching] = useState<boolean>(false);
-    const [error, setError] = useState<{ message: string } | null>();
 
     const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState<{ message: string } | null>(null);
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    useEffect(() => {
-        async function fetchPlaces() {
-            setIsFetching(true);
-            try {
-                const places = await fetchUserPlaces();
-                setUserPlaces(places);
-            } catch (error: unknown) {
-                setError({message: (error as Error).message || 'Failed to fetch user places.'});
-            }
+    
+    const {isFetching, error, data, setFetchedData, setError} = useFetch({fetchData: fetchUserPlaces, initialValue: []});
 
-            setIsFetching(false);
-        }
-
-        fetchPlaces();
-    }, []);
 
     function handleStartRemovePlace(place: Place) {
         setModalIsOpen(true);
@@ -47,20 +32,20 @@ export const App = (): ReactNode => {
     async function handleSelectPlace(selectedPlace: Place) {
         // await updateUserPlaces([selectedPlace, ...userPlaces]);
 
-        setUserPlaces((prevPickedPlaces) => {
-            if (!prevPickedPlaces) {
-                prevPickedPlaces = [];
+        setFetchedData(prevPlaces => {
+            if (!prevPlaces) {
+                prevPlaces = [];
             }
-            if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
-                return prevPickedPlaces;
+            if (prevPlaces.some((place) => place.id === selectedPlace.id)) {
+                return prevPlaces;
             }
-            return [selectedPlace, ...prevPickedPlaces];
+            return [selectedPlace, ...prevPlaces];
         });
 
         try {
-            await updateUserPlaces([selectedPlace, ...userPlaces]);
+            await updateUserPlaces([selectedPlace, ...data]);
         } catch (error: unknown) {
-            setUserPlaces(userPlaces);
+            setFetchedData(data);
             setErrorUpdatingPlaces({
                 message: (error as Error).message || 'Failed to update places.',
             });
@@ -69,7 +54,7 @@ export const App = (): ReactNode => {
 
     const handleRemovePlace = useCallback(
         async function handleRemovePlace() {
-            setUserPlaces((prevPickedPlaces) =>
+            setFetchedData((prevPickedPlaces) =>
                 prevPickedPlaces.filter(
                     (place) => place.id !== selectedPlace.current?.id
                 )
@@ -77,10 +62,10 @@ export const App = (): ReactNode => {
 
             try {
                 await updateUserPlaces(
-                    userPlaces.filter((place) => place.id !== selectedPlace.current?.id)
+                    data.filter((place) => place.id !== selectedPlace.current?.id)
                 );
             } catch (error: unknown) {
-                setUserPlaces(userPlaces);
+                setFetchedData(data);
                 setErrorUpdatingPlaces({
                     message: (error as Error).message || 'Failed to delete place.',
                 });
@@ -88,7 +73,7 @@ export const App = (): ReactNode => {
 
             setModalIsOpen(false);
         },
-        [userPlaces]
+        [data, setFetchedData]
     );
 
     function handleError() {
@@ -130,7 +115,7 @@ export const App = (): ReactNode => {
                         fallbackText="Select the places you would like to visit below."
                         isLoading={isFetching}
                         loadingText="Fetching your places..."
-                        places={userPlaces}
+                        places={data!}
                         onSelectPlace={handleStartRemovePlace}
                     />
                 )}
