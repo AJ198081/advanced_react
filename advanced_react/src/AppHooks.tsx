@@ -17,7 +17,7 @@ export const AppHooks = (): ReactNode => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     
-    const {isFetching, error, data, setFetchedData, setError} = useFetch({fetchData: fetchUserPlaces, initialValue: []});
+    const {isFetching, error, data, setFetchedData, setError} = useFetch({backendFetchFunction: fetchUserPlaces, initialValue: []});
 
 
     function handleStartRemovePlace(place: Place) {

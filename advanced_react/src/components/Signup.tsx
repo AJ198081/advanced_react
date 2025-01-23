@@ -1,22 +1,42 @@
-import {FormEvent, ReactNode} from "react";
+import {FormEvent, ReactNode, useState} from "react";
+
+export interface ObjectType {
+    [key: string]: string | string[] | number | Date | undefined;
+}
 
 export const Signup = (): ReactNode => {
+
+    const [error, setError] = useState<ObjectType | null>(null);
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
 
-        (e.target as HTMLFormElement).reset();
-
         const formData = new FormData((e.target as HTMLFormElement));
-        // const acquisitionChannel = formData.getAll('acquisition');
-        // const formEntries = Object.fromEntries(formData.entries());
 
+        console.log(formData);
+
+        if (formData.get('password') !== formData.get('confirm-password')) {
+            setError({password: 'Password and confirm password do not match'});
+        }
+
+       /* const acquisitionChannel = formData.getAll('acquisition');
+
+        const formEntries = Object.fromEntries(formData.entries());
         for (const entry of formData.keys()) {
             if (formData.getAll(entry).length > 1) {
-                // console.log({...formEntries, [entry]: formData.getAll(entry)})
+                console.log({...formEntries, [entry]: formData.getAll(entry)})
             }
         }
-        // console.log({...Object.fromEntries(formData.entries()), acquisition: acquisitionChannel});
+        const enrichedFormData = {...Object.fromEntries(formData.entries()), acquisition: acquisitionChannel};
+        console.log(enrichedFormData);*/
+        (e.target as HTMLFormElement).reset();
+
     };
+
+    if (error !== null) console.log(error);
+
+
     return (
         <form onSubmit={handleSubmit}>
             <h2>Welcome on board!</h2>

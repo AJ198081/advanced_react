@@ -31,7 +31,7 @@ export const AvailablePlaces = ({onSelectPlace}: AvailablePlacesProps): ReactNod
         error,
         data: availablePlaces,
         setError
-    } = useFetch({fetchData: fetchSortedPlaces, initialValue: [] as Place[]});
+    } = useFetch({backendFetchFunction: fetchSortedPlaces, initialValue: [] as Place[]});
 
     if (error) {
         return <Error title="An error occurred!" message={error.message} onConfirm={() => setError(null)}/>;

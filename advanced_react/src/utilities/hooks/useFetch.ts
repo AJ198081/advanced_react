@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
 interface FetchInput <T> {
-    fetchData: () => Promise<T>,
+    backendFetchFunction: () => Promise<T>,
     initialValue: T
 }
 
@@ -13,7 +13,7 @@ interface FetchResponse<T> {
     setFetchedData: Dispatch<SetStateAction<T>>
 }
 
-export function useFetch<T>({fetchData, initialValue}: FetchInput<T>): FetchResponse<T> {
+export function useFetch<T>({backendFetchFunction, initialValue}: FetchInput<T>): FetchResponse<T> {
 
     const [isFetching, setIsFetching] = useState(false);
     const [fetchedData, setFetchedData] = useState<T>(initialValue);
@@ -24,7 +24,7 @@ export function useFetch<T>({fetchData, initialValue}: FetchInput<T>): FetchResp
         async function callFetch(): Promise<void> {
             setIsFetching(true);
             try {
-                const data = await fetchData() as T;
+                const data = await backendFetchFunction() as T;
                 setFetchedData(data);
             } catch (error: unknown) {
                 setError({message: (error as Error).message || 'Failed to fetch data.'});
@@ -33,7 +33,7 @@ export function useFetch<T>({fetchData, initialValue}: FetchInput<T>): FetchResp
         }
 
         void callFetch();
-    }, [fetchData]);
+    }, [backendFetchFunction]);
     
     return {isFetching, error, data: fetchedData, setFetchedData, setError};
 }
