@@ -1,15 +1,17 @@
-import {useState, FormEvent} from "react";
+import {useState, FormEvent, SetStateAction, Dispatch} from "react";
 import {FormElement} from "../evergreen/FormElement.tsx";
 import {FieldError} from "../types/FieldError";
+import {AxiosInstance} from "../services/AxiosInstance.ts";
+import {useEffect} from "react";
+import {PostType} from "../types/Types.ts";
 
-interface Post {
-    title: string,
-    description: string,
+interface PostCreateProps {
+    updatePosts: Dispatch<SetStateAction<PostType[]>>,
 }
 
-export function PostCreate() {
+export function PostCreate({updatePosts}: PostCreateProps) {
 
-    const [post, setPost] = useState<Post>({} as Post);
+    const [post, setPost] = useState<PostType>({} as PostType);
     const [errors, setErrors] = useState<FieldError[]>([]);
 
     const TITLE = "title";
@@ -38,11 +40,44 @@ export function PostCreate() {
         }
 
         if (errors.length === 0) {
-            setPost(Object.fromEntries(formData.entries()) as unknown as Post);
-            formData.delete(TITLE);
-            formData.delete(DESCRIPTION);
+            setPost(Object.fromEntries(formData.entries()) as unknown as PostType);
+            (e.target as HTMLFormElement).reset();
         }
     };
+
+    useEffect(() => {
+        async function addPost() {
+            const response = await AxiosInstance.post("/posts", post, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).catch(error => {
+                    if (error instanceof Error) {
+                        console.log(`Error submitting post, ${error.message}`);
+                    } else {
+                        console.log(`error => ${error}`);
+                    }
+                }) ;
+
+            if (response && response.status === 200) {
+                updatePosts(prev => prev.concat(response.data));
+                console.log(`response.data => ${response.data}`);
+            }
+        }
+
+        if(post.title && post.description) {
+            try {
+                void addPost();
+            } catch (error){
+                if (error instanceof Error) {
+                    console.log(`error => ${error.message}`);
+                } else {
+                    console.log(`error => ${error}`);
+                }
+            }
+
+        }
+    }, [post])
 
     return <div>
         <form className={"w-50 my-0 mx-auto"} onSubmit={handleSubmit} encType={"multipart/form-data"}>
@@ -53,7 +88,7 @@ export function PostCreate() {
                          valid_text={"Looks good!"}
                          invalid_text={"Title should be between 10 and 140 characters long"}
                          errors={errors}
-                         setErrors={setErrors}/>
+                         resetErrors={setErrors}/>
 
             <FormElement name={DESCRIPTION}
                          type={"textarea"}
@@ -61,7 +96,7 @@ export function PostCreate() {
                          valid_text={"Looks good!"}
                          invalid_text={"Description should be at least 50 characters"}
                          errors={errors}
-                         setErrors={setErrors}
+                         resetErrors={setErrors}
                          rows={5}
             />
 

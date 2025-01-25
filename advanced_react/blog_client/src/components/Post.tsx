@@ -12,10 +12,10 @@ export function Post({title, body}: PostProps): ReactNode {
         return <CommentCreate />
     }
 
-    return <div className="card bg-dark-subtle text-dark-emphasis" style={{"width": "18rem"}}>
+    return <div className="card bg-dark-subtle text-dark-emphasis col-2 m-1" style={{"width": "18rem"}}>
         <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <p className="card-text">{body}</p>
+            <h3 className="card-title">{title}</h3>
+            <p className="card-text text-truncate">{body}</p>
             <ListComments />
             <button className="card-link btn btn-success" onClick={() => addNewComment()}>Create Comment</button>
         </div>

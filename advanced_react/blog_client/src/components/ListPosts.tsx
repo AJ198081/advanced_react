@@ -1,7 +1,16 @@
 import {Post} from "./Post.tsx";
+import {PostType} from "../types/Types.ts";
 
-export function ListPosts() {
-    return <div>
-        <Post key={1} title="Post 1" body="Post 1 body" />
+interface PostProps {
+    posts: PostType[]
+}
+
+
+export function ListPosts({posts}: PostProps) {
+
+    return <div className="container d-flex row">
+        { posts.length > 0 && posts.map( post =>
+            <Post key={post.id} title={post.title} body={post.description}/>
+        )}
     </div>
 }
